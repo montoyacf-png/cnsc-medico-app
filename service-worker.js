@@ -1,8 +1,7 @@
 
 self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open('cnsc-app').then(cache => {
-      return cache.addAll(['index.html']);
-    })
-  );
+  e.waitUntil(caches.open('cnsc-v8').then(cache => cache.addAll(['./', 'index.html', 'manifest.json'])));
+});
+self.addEventListener('fetch', e => {
+  e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
 });
